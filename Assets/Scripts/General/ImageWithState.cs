@@ -7,7 +7,7 @@ using UnityEngine;
  * NSCC - Game Programming Student
  * This script handles logic for on / off switch state for an image component for a game object.
 */
-public class NewBehaviourScript : MonoBehaviour
+public class ImageWithState : MonoBehaviour
 {
     public bool bState = false; //set to public for initial state
     private UnityEngine.UI.Image imageComponent = null; //self attach
