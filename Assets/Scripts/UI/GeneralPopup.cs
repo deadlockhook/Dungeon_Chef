@@ -9,9 +9,14 @@ public class GeneralPopup : MonoBehaviour
     // Start is called before the first frame update
     private IngameUIManager ingameUIManager;
     private List<ImageWithState> popupImages;
+    public Sprite TestSprite;
     void Start()
     {
         ingameUIManager = FindAnyObjectByType<IngameUIManager>();
+        popupImages = new List<ImageWithState>();
+        PushElement(TestSprite,TestSprite);
+        PushElement(TestSprite, TestSprite);
+        PushElement(TestSprite, TestSprite);
     }
 
     public void PushElement(Sprite activeSprite,Sprite inactiveSprite)
@@ -22,6 +27,7 @@ public class GeneralPopup : MonoBehaviour
         {
             popupImages.Add(imageObj);
             SetupPositions();
+            Debug.Log("Add success ");
         }
     }
     void RemoveElement(ImageWithState state)

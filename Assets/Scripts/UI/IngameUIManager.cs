@@ -10,7 +10,7 @@ public class IngameUIManager : MonoBehaviour
 
     void Start()
     {
-        CreateImageWithState(this.gameObject.transform, TestSprite, TestSprite);
+
     }
 
     void Update()
@@ -20,7 +20,7 @@ public class IngameUIManager : MonoBehaviour
 
     public ImageWithState CreateImageWithState(Transform parent, Sprite activeSprite, Sprite inactiveSprite)
     {
-        return CreateImageWithStateEx(this.gameObject.transform, TestSprite, TestSprite, false, new Vector2(50, 50)); ;
+        return CreateImageWithStateEx(this.gameObject.transform, activeSprite, inactiveSprite, false, new Vector2(50, 50)); ;
     }
 
     public ImageWithState CreateImageWithStateEx(Transform parent, Sprite activeSprite, Sprite inactiveSprite, bool initialState, Vector2 scale)
