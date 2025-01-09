@@ -11,6 +11,8 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance { get; private set; }
+
     public enum UIState
     {
         MainMenu,
@@ -24,6 +26,18 @@ public class UIManager : MonoBehaviour
     public GameObject gameplayUI;
 
     private bool isPaused = false;
+
+    //Singleton
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {
@@ -55,9 +69,19 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void StartGame()
+    private void Update()
     {
-        ChangeUIState(UIState.Gameplay);
+        if (Input.GetKeyDown(KeyCode.Escape) && !mainMenuUI.activeSelf)
+        {
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
     }
 
     public void PauseGame()
@@ -72,7 +96,7 @@ public class UIManager : MonoBehaviour
         ChangeUIState(UIState.Gameplay);
     }
 
-    public void SetToMainMenu()
+    public void GoToMainMenu()
     {
         ChangeUIState(UIState.MainMenu);
     }
@@ -81,20 +105,5 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Quitting game");
         Application.Quit();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && !mainMenuUI.activeSelf)
-        {
-            if (isPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
-        }
     }
 }
