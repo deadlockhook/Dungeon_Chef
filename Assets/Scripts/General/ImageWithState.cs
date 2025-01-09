@@ -35,10 +35,10 @@ public class NewBehaviourScript : MonoBehaviour
     {
         bState = newState;
 
-        if (imageComponent)
-            imageComponent.sprite = activeSprite ? activeSprite : null;
+        if (bState)
+            imageComponent.sprite = activeSprite;
         else
-            imageComponent.sprite = inactiveSprite ? inactiveSprite : null;
+            imageComponent.sprite = inactiveSprite;
     }
 
 }
