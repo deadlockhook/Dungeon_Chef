@@ -9,7 +9,7 @@ public class IngameUIManager : MonoBehaviour
     public GameObject ImageWithStatePrf;
     public GameObject CreateImageWithState(Transform parent, Sprite activeSprite, Sprite inactiveSprite, bool initialState)
     {
-        static GameObject prefab = Resources.Load<GameObject>($"Prefabs/{prefabName}");
+        GameObject prefab = Resources.Load<GameObject>($"Prefabs/UI/ImageWithStatePrf");
 
         if (ImageWithStatePrf == null)
         {
