@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
  * Credits - Harjot Singh Gill 
@@ -25,18 +27,21 @@ public class ImageWithState : MonoBehaviour
             inactiveSprite = activeSprite;
 
         UpdateState(bState); // Set sprite according to initial state of the image
-    }
 
+        GetComponent<Button>().onClick.AddListener(ButtonCallback);
+    }
+    private void ButtonCallback()
+    {
+        UpdateState(!bState);
+    }
     public bool GetState()
     {
         return bState;
     }
-
     public void SetActiveSprite(Sprite _activeSprite)
     {
         activeSprite = _activeSprite;
     }
-
     public void SetInActiveSprite(Sprite _inactiveSprite)
     {
         inactiveSprite = _inactiveSprite;

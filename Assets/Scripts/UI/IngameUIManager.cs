@@ -8,6 +8,16 @@ public class IngameUIManager : MonoBehaviour
 
     public Sprite TestSprite;
 
+    void Start()
+    {
+        CreateImageWithState(this.gameObject.transform, TestSprite, TestSprite);
+    }
+
+    void Update()
+    {
+
+    }
+
     public ImageWithState CreateImageWithState(Transform parent, Sprite activeSprite, Sprite inactiveSprite)
     {
         return CreateImageWithStateEx(this.gameObject.transform, TestSprite, TestSprite, false, new Vector2(50, 50)); ;
@@ -35,15 +45,5 @@ public class IngameUIManager : MonoBehaviour
         newImageObject.GetComponent<RectTransform>().sizeDelta = scale;
 
         return imageWithStateScript;
-    }
-    void Start()
-    {
-        CreateImageWithState(this.gameObject.transform, TestSprite, TestSprite);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
