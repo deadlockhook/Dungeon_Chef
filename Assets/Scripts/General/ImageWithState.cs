@@ -45,10 +45,12 @@ public class ImageWithState : MonoBehaviour
     {
         bState = newState;
 
+        // Had to use GetComponent<UnityEngine.UI.Image>() due to unity's null exception bug
+
         if (bState)
-            imageComponent.sprite = activeSprite;
+            GetComponent<UnityEngine.UI.Image>().sprite = activeSprite;
         else
-            imageComponent.sprite = inactiveSprite;
+            GetComponent<UnityEngine.UI.Image>().sprite = inactiveSprite;
     }
 
 }

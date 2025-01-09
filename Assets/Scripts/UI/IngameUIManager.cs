@@ -6,38 +6,39 @@ public class IngameUIManager : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public GameObject ImageWithStatePrf;
-    public GameObject CreateImageWithState(Transform parent, Sprite activeSprite, Sprite inactiveSprite, bool initialState)
+    public Sprite TestSprite;
+
+    public ImageWithState CreateImageWithState(Transform parent, Sprite activeSprite, Sprite inactiveSprite)
+    {
+        return CreateImageWithStateEx(this.gameObject.transform, TestSprite, TestSprite, false, new Vector2(50, 50)); ;
+    }
+
+    public ImageWithState CreateImageWithStateEx(Transform parent, Sprite activeSprite, Sprite inactiveSprite, bool initialState, Vector2 scale)
     {
         GameObject prefab = Resources.Load<GameObject>($"Prefabs/UI/ImageWithStatePrf");
 
-        if (ImageWithStatePrf == null)
-        {
-            Debug.LogError("ImageWithStatePrf is not assigned in the Inspector!");
+        if (prefab == null)
+        
             return null;
-        }
 
-        GameObject newImageObject = Instantiate(ImageWithStatePrf, parent);
+        GameObject newImageObject = Instantiate(prefab, parent);
 
         ImageWithState imageWithStateScript = newImageObject.GetComponent<ImageWithState>();
 
         if (imageWithStateScript == null)
-        {
-            Debug.LogError("Prefab does not have the ImageWithState script attached!");
             return null;
-        }
 
-        // Set the active and inactive sprites
         imageWithStateScript.SetActiveSprite(activeSprite);
         imageWithStateScript.SetInActiveSprite(inactiveSprite);
         imageWithStateScript.UpdateState(initialState);
-        // Return the created GameObject
-        return newImageObject;
-    }
 
+        newImageObject.GetComponent<RectTransform>().sizeDelta = scale;
+
+        return imageWithStateScript;
+    }
     void Start()
     {
-        
+        CreateImageWithState(this.gameObject.transform, TestSprite, TestSprite);
     }
 
     // Update is called once per frame
