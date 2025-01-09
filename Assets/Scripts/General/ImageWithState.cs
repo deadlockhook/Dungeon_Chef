@@ -11,7 +11,7 @@ public class NewBehaviourScript : MonoBehaviour
 {
     public bool bState = false; //set to public for initial state
     private UnityEngine.UI.Image imageComponent = null; //self attach
-   
+
     public Sprite activeSprite = null;
     public Sprite inactiveSprite = null;
     void Start()
@@ -30,6 +30,16 @@ public class NewBehaviourScript : MonoBehaviour
     public bool GetState()
     {
         return bState;
+    }
+
+    public void SetActiveSprite(Sprite _activeSprite)
+    {
+        activeSprite = _activeSprite;
+    }
+
+    public void SetInActiveSprite(Sprite _inactiveSprite)
+    {
+        inactiveSprite = _inactiveSprite;
     }
     public void UpdateState(bool newState)
     {
