@@ -66,4 +66,14 @@ public class ThirdPersonController : MonoBehaviour
 				break;
 		}
 	}
+
+	// For debugging
+	private void OnDrawGizmos()
+	{
+		if (!Application.isPlaying || agent == null)
+			return;
+
+		Gizmos.color = Color.green;
+		Gizmos.DrawWireSphere(agent.destination, 0.5f);
+	}
 }
