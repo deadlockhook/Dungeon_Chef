@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// How to use: 
+// - Adding items: InventoryManager.Instance.AddItem(name of item,number of items);
+// - Removing items: InventoryManager.Instance.RemoveItem(name of item, number of items);
+
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
