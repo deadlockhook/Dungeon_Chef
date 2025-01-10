@@ -7,6 +7,15 @@ using System.Linq;
 	* Credits - Joseph MacDonald
 	* NSCC - Game Programming Student
 	* This script handles logic for UI and Music audio
+
+	(How to use)
+
+	If you want to play a music track, first add the track to the music list in the scriptable object
+	Then when you want to play it, use SoundManager.PlayMusic("Name of track", "Volume, ranges from 0-1", "true or flase if you want it to loop")
+	Use SoundManager.StopMusic() to stop music
+
+	If you want to play UI sound, add sound to list in scriptable object
+	Then use SoundManager.PlayUIAudio("Name of sound, "Volume, ranges from 0-1")
 */
 
 public class SoundManager : MonoBehaviour
