@@ -42,6 +42,9 @@ public class ThirdPersonController : MonoBehaviour
 			{
 				agent.SetDestination(hit.point);
 			}
+
+			// Testing
+			SoundManager.PlayUIAudio("Clicked", 1f);
 		}
 
 		// Update state machine based on vel (This is also how we are gonna trigger player animations)
