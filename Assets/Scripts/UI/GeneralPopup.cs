@@ -34,13 +34,14 @@ public class GeneralPopup : MonoBehaviour
         PushElement(TestSpriteActive, TestSpriteInactive);
         PushElement(TestSpriteActive, TestSpriteInactive);
 
-
         RectTransform backgroundImageRectTransform = transform.Find("BG").GetComponent<RectTransform>();
-        RectTransform parentRectTransform = this.gameObject.GetComponent<RectTransform>();
-   //     backgroundImageRectTransform.anchoredPosition = parentRectTransform.anchoredPosition;
-        backgroundImageRectTransform.position = parentRectTransform.position;
 
-        backgroundImageRectTransform.sizeDelta = new Vector2(rowSize/ 2.0f, columnSize / 2.0f);
+        backgroundImageRectTransform.sizeDelta = new Vector2(rowSize, columnSize); 
+        backgroundImageRectTransform.anchoredPosition = Vector2.zero;
+        backgroundImageRectTransform.pivot = new Vector2(0, 0);
+        backgroundImageRectTransform.anchorMin = new Vector2(0, 0); 
+        backgroundImageRectTransform.anchorMax = new Vector2(0, 0); 
+
     }
 
     public void PushElement(Sprite activeSprite,Sprite inactiveSprite)
@@ -51,14 +52,12 @@ public class GeneralPopup : MonoBehaviour
         {
             popupImages.Add(imageObj);
             SetupPositions();
-            Debug.Log("Add success ");
         }
     }
     void RemoveElement(ImageWithState state)
     {
-        Debug.Log("Remove success " + popupImages.Remove(state));
+        popupImages.Remove(state);
         SetupPositions();
-        //Recalculate all new positions of the popupImages
     }
     void SetupPositions()
     {
@@ -67,7 +66,7 @@ public class GeneralPopup : MonoBehaviour
 
         int currentElementIndex = 0;
 
-        Vector2 thisObjectRectTransformPosition = this.gameObject.GetComponent<RectTransform>().position;
+        Vector2 thisObjectRectTransformPosition = Vector2.zero;
 
         foreach (var currentItem in popupImages)
         {
@@ -80,7 +79,10 @@ public class GeneralPopup : MonoBehaviour
             RectTransform currentItemRectTransform = currentItem.GetComponent<RectTransform>();
             Vector2 currentItemRectTransformPosition = currentItemRectTransform.position;
             Vector2 currentItemRectTransformSize = currentItemRectTransform.sizeDelta;
-            currentItemRectTransform.position = new Vector2(thisObjectRectTransformPosition.x + ((widthPerElement + currentItemRectTransformSize.x) * currentElementIndex), thisObjectRectTransformPosition.y + ((widthPerElement + (currentItemRectTransformSize.y * -1)) * currentColumn));
+            currentItemRectTransform.pivot = new Vector2(0, 0);
+            currentItemRectTransform.anchorMin = new Vector2(0, 0); 
+            currentItemRectTransform.anchorMax = new Vector2(0, 0); 
+            currentItemRectTransform.anchoredPosition = new Vector2(thisObjectRectTransformPosition.x + ((widthPerElement + currentItemRectTransformSize.x) * currentElementIndex), thisObjectRectTransformPosition.y + ((widthPerElement + (currentItemRectTransformSize.y )) * currentColumn));
 
             ++currentElementIndex;
         }
