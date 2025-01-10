@@ -27,15 +27,14 @@ public class IngameUIManager : MonoBehaviour
     {
         GameObject prefab = Resources.Load<GameObject>($"Prefabs/UI/ImageWithStatePrf");
 
-        if (prefab == null)
-        
+        if (!prefab)
             return null;
 
         GameObject newImageObject = Instantiate(prefab, parent);
 
         ImageWithState imageWithStateScript = newImageObject.GetComponent<ImageWithState>();
 
-        if (imageWithStateScript == null)
+        if (!imageWithStateScript)
             return null;
 
         imageWithStateScript.SetActiveSprite(activeSprite);

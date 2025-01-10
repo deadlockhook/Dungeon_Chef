@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TipsPopup : MonoBehaviour
 {
+    public string tipText = "test";
     // Start is called before the first frame update
     void Start()
     {

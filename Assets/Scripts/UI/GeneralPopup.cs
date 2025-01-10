@@ -28,6 +28,7 @@ public class GeneralPopup : MonoBehaviour
         columnSize = ((popupElementSize + widthPerElement)) * maxColumns;
         ingameUIManager = FindAnyObjectByType<IngameUIManager>();
         popupImages = new List<ImageWithState>();
+
         PushElement(TestSpriteActive, TestSpriteInactive);
         PushElement(TestSpriteActive, TestSpriteInactive);
         PushElement(TestSpriteActive, TestSpriteInactive);
@@ -58,6 +59,7 @@ public class GeneralPopup : MonoBehaviour
         backgroundImageOutlineRectTransform.anchorMax = new Vector2(0, 0);
 
         exitButton.onClick.AddListener(OnExitButton);
+        AddActionButtonListener(OnExitButton);
     }
 
     public void AddActionButtonListener(UnityAction callBack)
@@ -67,7 +69,7 @@ public class GeneralPopup : MonoBehaviour
         actionButton.onClick.AddListener(callBack);
     }
 
-    public void PushElement(Sprite activeSprite,Sprite inactiveSprite)
+    public ImageWithState PushElement(Sprite activeSprite,Sprite inactiveSprite)
     {
         ImageWithState imageObj = ingameUIManager.CreateImageWithStateEx(this.gameObject.transform, activeSprite, inactiveSprite, false, new Vector2(popupElementSize, popupElementSize));
 
@@ -76,8 +78,10 @@ public class GeneralPopup : MonoBehaviour
             popupImages.Add(imageObj);
             SetupPositions();
         }
+
+        return imageObj;
     }
-    void RemoveElement(ImageWithState state)
+    public void RemoveElement(ImageWithState state)
     {
         popupImages.Remove(state);
         SetupPositions();
@@ -106,7 +110,6 @@ public class GeneralPopup : MonoBehaviour
             currentItemRectTransform.anchorMin = new Vector2(0, 0); 
             currentItemRectTransform.anchorMax = new Vector2(0, 0); 
             currentItemRectTransform.anchoredPosition = new Vector2(thisObjectRectTransformPosition.x + ((widthPerElement + currentItemRectTransformSize.x) * currentElementIndex), thisObjectRectTransformPosition.y + ((widthPerElement + (currentItemRectTransformSize.y )) * currentColumn));
-
             ++currentElementIndex;
         }
     }
