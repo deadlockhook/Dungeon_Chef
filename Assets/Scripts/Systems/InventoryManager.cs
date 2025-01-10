@@ -9,6 +9,7 @@ public class InventoryManager : MonoBehaviour
     // Ingredient Scriptable Objects. Add here if you create a new ingredient
     public Ingredient carrot;
     public Ingredient sugar;
+    public Food cake;
     
     //Singleton
     private void Awake()
@@ -22,41 +23,41 @@ public class InventoryManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Holds ingredient and its quantity
+    // Holds item and its quantity
     [System.Serializable]
-    public class IngredientSlot
+    public class InventorySlot
     {
-        public Ingredient ingredient;
+        public ScriptableObject item;
         public int quantity;
     }
 
-    public List<IngredientSlot> ingredientSlots = new List<IngredientSlot>();
+    public List<InventorySlot> inventorySlots = new List<InventorySlot>();
 
-    public void AddIngredient(Ingredient ingredient, int amount)
+    public void AddItem(ScriptableObject item, int amount)
     {
-        // Finds the ingredient slot with the matching ingredient, or null if its not found
-        var slot = ingredientSlots.Find(s => s.ingredient == ingredient);
+        // Finds the item slot with the matching iitem, or null if its not found
+        var slot = inventorySlots.Find(s => s.item == item);
         if (slot != null)
         {
             slot.quantity += amount;
         }
         else
         {
-            // Adds a new slot if the ingredient is not found
-            ingredientSlots.Add(new IngredientSlot { ingredient = ingredient, quantity = amount });
+            // Adds a new slot if the item is not found
+            inventorySlots.Add(new InventorySlot { item = item, quantity = amount });
         }
     }
 
-    public bool RemoveIngredient(Ingredient ingredient, int amount)
+    public bool RemoveItem(ScriptableObject item, int amount)
     {
-        // Finds the ingredient slot with the matching ingredient, or null if its not found
-        var slot = ingredientSlots.Find(s => s.ingredient == ingredient);
+        // Finds the item slot with the matching item, or null if its not found
+        var slot = inventorySlots.Find(s => s.item == item);
         if (slot != null && slot.quantity >= amount)
         {
             slot.quantity -= amount;
             if (slot.quantity == 0)
             {
-                ingredientSlots.Remove(slot);
+                inventorySlots.Remove(slot);
             }
             return true;
         }
