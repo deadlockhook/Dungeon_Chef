@@ -1,21 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// How to use: 
-// - Adding items: InventoryManager.Instance.AddItem(name of item,number of items);
-// - Removing items: InventoryManager.Instance.RemoveItem(name of item, number of items);
-
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager Instance { get; private set; }
-
-    // Ingredient Scriptable Objects. Add here if you create a new ingredient
-    public Ingredient carrot;
-    public Ingredient sugar;
-    public Food cake;
-    
     //Singleton
+    public static InventoryManager Instance { get; private set; }
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -27,44 +16,127 @@ public class InventoryManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Holds item and its quantity
+    // Enums for ingredients and dishes
+    public enum IngredientList
+    {
+        IngredientOne = 0, // Ex: Carrot
+        IngredientTwo = 1  // Ex: Flour
+    }
+
+    public enum DishList
+    {
+        DishOne = 0 // Ex: Carrot Cake
+    }
+
+    // Ingredient struct
     [System.Serializable]
-    public class InventorySlot
+    public struct Ingredient
     {
-        public ScriptableObject item;
-        public int quantity;
-    }
+        public string Name;
+        public int IngredientIndex;
 
-    public List<InventorySlot> inventorySlots = new List<InventorySlot>();
-
-    public void AddItem(ScriptableObject item, int amount)
-    {
-        // Finds the item slot with the matching iitem, or null if its not found
-        var slot = inventorySlots.Find(s => s.item == item);
-        if (slot != null)
+        public Ingredient(string name, int index)
         {
-            slot.quantity += amount;
-        }
-        else
-        {
-            // Adds a new slot if the item is not found
-            inventorySlots.Add(new InventorySlot { item = item, quantity = amount });
+            Name = name;
+            IngredientIndex = index;
         }
     }
 
-    public bool RemoveItem(ScriptableObject item, int amount)
+    // Dish struct
+    [System.Serializable]
+    public struct Dish
     {
-        // Finds the item slot with the matching item, or null if its not found
-        var slot = inventorySlots.Find(s => s.item == item);
-        if (slot != null && slot.quantity >= amount)
+        public string Name;
+        public int DishIndex;
+        public List<KeyValuePair<int, int>> IngredientsRequired;
+
+        public Dish(string name, int index, List<KeyValuePair<int, int>> ingredientsRequired)
         {
-            slot.quantity -= amount;
-            if (slot.quantity == 0)
+            Name = name;
+            DishIndex = index;
+            IngredientsRequired = ingredientsRequired;
+        }
+    }
+
+    // Lists for ingredients and dishes
+    [SerializeField] private List<Ingredient> ingredients = new List<Ingredient>();
+    [SerializeField] private List<Dish> dishes = new List<Dish>();
+
+    // Unlocked dishes
+    [SerializeField] private List<Dish> unlockedDishes = new List<Dish>();
+
+    // Add an ingredient to the inventory
+    public int AddIngredient(int index)
+    {
+        ingredients.Add(new Ingredient(((IngredientList)index).ToString(), index));
+        return ingredients.Count;
+    }
+
+    // Remove an ingredient from the inventory
+    public int RemoveIngredient(int index)
+    {
+        var ingredient = ingredients.Find(i => i.IngredientIndex == index);
+        if (ingredient.Name != null)
+        {
+            ingredients.Remove(ingredient);
+        }
+        return ingredients.Count;
+    }
+
+    // Add a dish to the inventory
+    public int AddDish(int index)
+    {
+        dishes.Add(new Dish(((DishList)index).ToString(), index, new List<KeyValuePair<int, int>>()));
+        return dishes.Count;
+    }
+
+    // Remove a dish from the inventory
+    public int RemoveDish(int index)
+    {
+        var dish = dishes.Find(d => d.DishIndex == index);
+        if (dish.Name != null)
+        {
+            dishes.Remove(dish);
+        }
+        return dishes.Count;
+    }
+
+    // Check if a dish can be unlocked
+    public bool IsDishUnlockable(Dish providedDish)
+    {
+        foreach (var requirement in providedDish.IngredientsRequired)
+        {
+            int ingredientIndex = requirement.Key;
+            int requiredCount = requirement.Value;
+
+            int availableCount = ingredients.FindAll(i => i.IngredientIndex == ingredientIndex).Count;
+
+            if (availableCount < requiredCount)
+                return false;
+        }
+        return true;
+    }
+
+    // Research a dish
+    public int ResearchDish(Dish providedDish)
+    {
+        if (IsDishUnlockable(providedDish))
+        {
+            unlockedDishes.Add(providedDish);
+
+            // Remove ingredients from inventory
+            foreach (var requirement in providedDish.IngredientsRequired)
             {
-                inventorySlots.Remove(slot);
+                int ingredientIndex = requirement.Key;
+                int requiredCount = requirement.Value;
+
+                for (int i = 0; i < requiredCount; i++)
+                {
+                    RemoveIngredient(ingredientIndex);
+                }
             }
-            return true;
+            return unlockedDishes.Count;
         }
-        return false;
+        return -1;
     }
 }
