@@ -99,6 +99,17 @@ public class InventoryManager : MonoBehaviour
         return dishes.Count;
     }
 
+    private void RemoveIngredientForADish(Dish dish)
+    {
+        foreach (var requirement in dish.IngredientsRequired)
+        {
+            for (int i = 0; i < requirement.Value; i++)
+            {
+                RemoveIngredient(requirement.Key);
+            }
+        }
+    }
+
     // Check if a dish can be unlocked
     public bool IsDishUnlockable(Dish providedDish)
     {
