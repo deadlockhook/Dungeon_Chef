@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,20 +24,17 @@ public class GeneralPopup : MonoBehaviour
     private int rowSize = 0;
     private int columnSize = 0;
 
+    public delegate void OnAction(GeneralPopup target);
+
+    private List<OnAction> actions;
+
     void Start()
     {
         rowSize = ((popupElementSize + widthPerElement)) * maxElementsPerRow;
         columnSize = ((popupElementSize + widthPerElement)) * maxColumns;
         ingameUIManager = FindAnyObjectByType<IngameUIManager>();
         popupImages = new List<ImageWithState>();
-
-        PushElement(TestSpriteActive, TestSpriteInactive);
-        PushElement(TestSpriteActive, TestSpriteInactive);
-        PushElement(TestSpriteActive, TestSpriteInactive);
-        PushElement(TestSpriteActive, TestSpriteInactive);
-        PushElement(TestSpriteActive, TestSpriteInactive);
-        PushElement(TestSpriteActive, TestSpriteInactive);
-        PushElement(TestSpriteActive, TestSpriteInactive);
+        actions= new List<OnAction>();
 
         RectTransform backgroundImageRectTransform = transform.Find("BG").GetComponent<RectTransform>();
         RectTransform backgroundImageOutlineRectTransform = transform.Find("BGOutline").GetComponent<RectTransform>();
@@ -60,14 +58,22 @@ public class GeneralPopup : MonoBehaviour
         backgroundImageOutlineRectTransform.anchorMax = new Vector2(0, 0);
 
         exitButton.onClick.AddListener(OnExitButton);
-        AddActionButtonListener(OnExitButton);
+        exitButton.onClick.AddListener(OnActionButton);
+
+        PushElement(TestSpriteActive, TestSpriteInactive);
+        PushElement(TestSpriteActive, TestSpriteInactive);
+        PushElement(TestSpriteActive, TestSpriteInactive);
+        PushElement(TestSpriteActive, TestSpriteInactive);
+        PushElement(TestSpriteActive, TestSpriteInactive);
+        PushElement(TestSpriteActive, TestSpriteInactive);
+        PushElement(TestSpriteActive, TestSpriteInactive);
     }
 
-    public void AddActionButtonListener(UnityAction callBack)
+    public void AddActionButtonListener(OnAction callBack)
     {
         RectTransform backgroundImageRectTransform = transform.Find("BG").GetComponent<RectTransform>();
         Button actionButton = backgroundImageRectTransform.transform.Find("ActionButton").GetComponent<Button>();
-        actionButton.onClick.AddListener(callBack);
+        actions.Add(callBack);
     }
 
     public ImageWithState PushElement(Sprite activeSprite,Sprite inactiveSprite)
@@ -117,6 +123,17 @@ public class GeneralPopup : MonoBehaviour
     private void OnExitButton()
     {
         this.gameObject.SetActive(false);
+    }
+    private void OnActionButton()
+    {
+        if (actions.Count == 0)
+            return;
+
+        for (int i = 0; i < actions.Count; i++)
+        {
+            actions[i](this);
+        }
+
     }
     // Update is called once per frame
     void Update()

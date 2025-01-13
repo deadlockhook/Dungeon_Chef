@@ -10,6 +10,10 @@ public class InventoryManager : MonoBehaviour
 {
     //Singleton
     public static InventoryManager Instance { get; private set; }
+   
+    [SerializeField] private GeneralPopup cookingPopup;
+    [SerializeField] private GeneralPopup researchPopup;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -20,7 +24,10 @@ public class InventoryManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
+    private void Start()
+    {
+        researchPopup.AddActionButtonListener(OnUnlockDishAction);
+    }
     // Enums for ingredients and dishes
     public enum IngredientList
     {
@@ -152,5 +159,10 @@ public class InventoryManager : MonoBehaviour
             return unlockedDishes.Count;
         }
         return -1;
+    }
+
+    public void OnUnlockDishAction(GeneralPopup target)
+    {
+
     }
 }

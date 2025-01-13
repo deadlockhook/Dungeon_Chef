@@ -7,6 +7,9 @@ public class CookingManager : MonoBehaviour
 {
     private InventoryManager invenManager;
     private List<InventoryManager.Dish> cookedDishes;
+
+    [SerializeField] private GeneralPopup cookingPopup;
+    [SerializeField] private GeneralPopup researchPopup;
     void Start()
     {
         cookedDishes = new List<InventoryManager.Dish>();
