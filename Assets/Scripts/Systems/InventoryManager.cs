@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static InventoryManager;
 /*
 *Credits - Dylan Ryan
  * NSCC - Game Programming Student
@@ -174,6 +175,8 @@ public class InventoryManager : MonoBehaviour
 
     public void OnUnlockDishAction(GeneralPopup target, ImageWithState stateImage)
     {
+        ResearchDish(dishes[0]); //temporary
+
         //Need to disable player movement here
         Debug.Log("Unlock DIsh");
     }
