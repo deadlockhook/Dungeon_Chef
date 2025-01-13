@@ -32,6 +32,11 @@ public class ThirdPersonController : MonoBehaviour
 
 	void Update()
 	{
+		if (UIManager.Instance != null && UIManager.Instance.IsGamePaused())
+		{
+			return;
+		}
+
 		// Make player go to where you clicked
 		if (Input.GetMouseButtonDown(0))
 		{

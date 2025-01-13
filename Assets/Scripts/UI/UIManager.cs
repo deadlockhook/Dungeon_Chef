@@ -90,6 +90,11 @@ public class UIManager : MonoBehaviour
         ChangeUIState(UIState.PauseMenu);
     }
 
+    public bool IsGamePaused()
+    {
+        return isPaused;
+    }
+
     public void ResumeGame()
     {
         isPaused = false;
