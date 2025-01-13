@@ -24,7 +24,7 @@ public class GeneralPopup : MonoBehaviour
     private int rowSize = 0;
     private int columnSize = 0;
 
-    public delegate void OnAction(GeneralPopup target);
+    public delegate void OnAction(GeneralPopup target, ImageWithState stateIamage);
 
     private List<OnAction> actions;
 
@@ -34,7 +34,7 @@ public class GeneralPopup : MonoBehaviour
         columnSize = ((popupElementSize + widthPerElement)) * maxColumns;
         ingameUIManager = FindAnyObjectByType<IngameUIManager>();
         popupImages = new List<ImageWithState>();
-        actions= new List<OnAction>();
+        actions = new List<OnAction>();
 
         RectTransform backgroundImageRectTransform = transform.Find("BG").GetComponent<RectTransform>();
         RectTransform backgroundImageOutlineRectTransform = transform.Find("BGOutline").GetComponent<RectTransform>();
@@ -58,15 +58,8 @@ public class GeneralPopup : MonoBehaviour
         backgroundImageOutlineRectTransform.anchorMax = new Vector2(0, 0);
 
         exitButton.onClick.AddListener(OnExitButton);
-        exitButton.onClick.AddListener(OnActionButton);
+        actionButton.onClick.AddListener(OnActionButton);
 
-        PushElement(TestSpriteActive, TestSpriteInactive);
-        PushElement(TestSpriteActive, TestSpriteInactive);
-        PushElement(TestSpriteActive, TestSpriteInactive);
-        PushElement(TestSpriteActive, TestSpriteInactive);
-        PushElement(TestSpriteActive, TestSpriteInactive);
-        PushElement(TestSpriteActive, TestSpriteInactive);
-        PushElement(TestSpriteActive, TestSpriteInactive);
     }
 
     public void AddActionButtonListener(OnAction callBack)
@@ -131,7 +124,7 @@ public class GeneralPopup : MonoBehaviour
 
         for (int i = 0; i < actions.Count; i++)
         {
-            actions[i](this);
+            actions[i](this, null /*pass selected dish*/);
         }
 
     }

@@ -16,6 +16,8 @@ public class ImageWithState : MonoBehaviour
 
     public Sprite activeSprite = null;
     public Sprite inactiveSprite = null;
+
+    private int uniqueIndex = 0;
     void Start()
     {
         imageComponent = GetComponent<UnityEngine.UI.Image>();
@@ -30,11 +32,22 @@ public class ImageWithState : MonoBehaviour
 
         GetComponent<Button>().onClick.AddListener(ButtonCallback);
     }
-    
+
+    public void SetUniqueIndex(int _newIndex)
+    {
+        uniqueIndex = _newIndex;
+    }
+
+    public int GetUniqueIndex()
+    {
+       return uniqueIndex;
+    }
+
     public bool OverrideUpdatability()
     {
         return false;
     }
+
     private void ButtonCallback()
     {
         UpdateState(!bState);

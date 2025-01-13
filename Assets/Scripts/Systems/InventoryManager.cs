@@ -14,6 +14,9 @@ public class InventoryManager : MonoBehaviour
    
     [SerializeField] private GeneralPopup cookingPopup;
     [SerializeField] private GeneralPopup researchPopup;
+   
+    [SerializeField] private Sprite generalActiveSprite;
+    [SerializeField] private Sprite generalInactiveSprite;
 
     private void Awake()
     {
@@ -104,6 +107,7 @@ public class InventoryManager : MonoBehaviour
     {
        // new Dish(((DishList)index).ToString(), index, new List<KeyValuePair<int, int>>())
         dishes.Add(dish);
+        researchPopup.PushElement(generalActiveSprite, generalInactiveSprite);
         return dishes.Count;
     }
 
@@ -168,8 +172,9 @@ public class InventoryManager : MonoBehaviour
         return -1;
     }
 
-    public void OnUnlockDishAction(GeneralPopup target)
+    public void OnUnlockDishAction(GeneralPopup target, ImageWithState stateImage)
     {
-
+        //Need to disable player movement here
+        Debug.Log("Unlock DIsh");
     }
 }
