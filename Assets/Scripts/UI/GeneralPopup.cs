@@ -22,6 +22,7 @@ public class GeneralPopup : MonoBehaviour
 
     private int rowSize = 0;
     private int columnSize = 0;
+
     void Start()
     {
         rowSize = ((popupElementSize + widthPerElement)) * maxElementsPerRow;
