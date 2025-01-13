@@ -7,4 +7,5 @@ public class Food : ScriptableObject
 
 {
     public string foodName;
+    public Sprite icon;
 }
