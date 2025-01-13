@@ -30,6 +30,11 @@ public class ImageWithState : MonoBehaviour
 
         GetComponent<Button>().onClick.AddListener(ButtonCallback);
     }
+    
+    public bool OverrideUpdatability()
+    {
+        return false;
+    }
     private void ButtonCallback()
     {
         UpdateState(!bState);

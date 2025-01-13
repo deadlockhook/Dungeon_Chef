@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -27,6 +28,11 @@ public class InventoryManager : MonoBehaviour
     private void Start()
     {
         researchPopup.AddActionButtonListener(OnUnlockDishAction);
+       
+        AddDish(new Dish("dish1", (int)DishList.DishOne, new List<KeyValuePair<int, int>>() {
+            new KeyValuePair<int, int>(0, 1),
+            new KeyValuePair<int, int>(1, 1)} ));
+
     }
     // Enums for ingredients and dishes
     public enum IngredientList
@@ -94,9 +100,10 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Add a dish to the inventory
-    public int AddDish(int index)
+    public int AddDish(Dish dish)
     {
-        dishes.Add(new Dish(((DishList)index).ToString(), index, new List<KeyValuePair<int, int>>()));
+       // new Dish(((DishList)index).ToString(), index, new List<KeyValuePair<int, int>>())
+        dishes.Add(dish);
         return dishes.Count;
     }
 
