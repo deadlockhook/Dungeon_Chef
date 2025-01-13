@@ -46,10 +46,8 @@ public class ThirdPersonController : MonoBehaviour
 			if (Physics.Raycast(ray, out hit))
 			{
 				agent.SetDestination(hit.point);
+				SoundManager.PlayUIAudio("Clicked", 1f);
 			}
-
-			// Testing
-			SoundManager.PlayUIAudio("Clicked", 1f);
 		}
 
 		// Update state machine based on vel (This is also how we are gonna trigger player animations)
