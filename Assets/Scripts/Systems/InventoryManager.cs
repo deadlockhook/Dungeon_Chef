@@ -1,6 +1,11 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-
+/*
+*Credits - Dylan Ryan
+ * NSCC - Game Programming Student
+ * Manages inventory items and adding or removing items
+ * */
 public class InventoryManager : MonoBehaviour
 {
     //Singleton
