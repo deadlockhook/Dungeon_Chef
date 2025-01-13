@@ -29,7 +29,6 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Ingredient struct
-    [System.Serializable]
     public struct Ingredient
     {
         public string Name;
@@ -43,7 +42,6 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Dish struct
-    [System.Serializable]
     public struct Dish
     {
         public string Name;
@@ -59,11 +57,11 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Lists for ingredients and dishes
-    [SerializeField] private List<Ingredient> ingredients = new List<Ingredient>();
-    [SerializeField] private List<Dish> dishes = new List<Dish>();
+    private List<Ingredient> ingredients = new List<Ingredient>();
+    private List<Dish> dishes = new List<Dish>();
 
     // Unlocked dishes
-    [SerializeField] private List<Dish> unlockedDishes = new List<Dish>();
+    private List<Dish> unlockedDishes = new List<Dish>();
 
     // Add an ingredient to the inventory
     public int AddIngredient(int index)
