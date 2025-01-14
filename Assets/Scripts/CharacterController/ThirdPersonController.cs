@@ -46,7 +46,7 @@ public class ThirdPersonController : MonoBehaviour
 			if (Physics.Raycast(ray, out hit))
 			{
 				agent.SetDestination(hit.point);
-				SoundManager.PlayUIAudio("Clicked", 1f);
+				//SoundManager.PlayUIAudio("Clicked", 0.25f);
 			}
 		}
 
