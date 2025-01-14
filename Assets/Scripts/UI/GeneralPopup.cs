@@ -64,8 +64,6 @@ public class GeneralPopup : MonoBehaviour
 
     public void AddActionButtonListener(OnAction callBack)
     {
-        RectTransform backgroundImageRectTransform = transform.Find("BG").GetComponent<RectTransform>();
-        Button actionButton = backgroundImageRectTransform.transform.Find("ActionButton").GetComponent<Button>();
         actions.Add(callBack);
     }
 
